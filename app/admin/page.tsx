@@ -1,7 +1,6 @@
 "use client";
 
 import { StatusBadge } from "@/components/status-bagde";
-import { useAuth, useUser } from "@clerk/nextjs";
 import {
   ArrowRight,
   Building2,
@@ -103,38 +102,38 @@ const enquiries = [
 ];
 
 export default function AdminPage() {
-  const { isLoaded: authLoaded, isSignedIn } = useAuth();
-  const { user, isLoaded: userLoaded } = useUser();
+  // const { isLoaded: authLoaded, isSignedIn } = useAuth();
+  // const { user, isLoaded: userLoaded } = useUser();
 
-  if (!authLoaded || !userLoaded) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F8FAFC]">
-        <div className="h-6 w-6 animate-spin rounded-full border-2 border-gray-200 border-t-[#00875A]" />
-      </div>
-    );
-  }
+  // if (!authLoaded || !userLoaded) {
+  //   return (
+  //     <div className="flex min-h-screen items-center justify-center bg-[#F8FAFC]">
+  //       <div className="h-6 w-6 animate-spin rounded-full border-2 border-gray-200 border-t-[#00875A]" />
+  //     </div>
+  //   );
+  // }
 
-  if (!isSignedIn) {
-    return null;
-  }
+  // if (!isSignedIn) {
+  //   return null;
+  // }
 
-  const role = user?.publicMetadata?.role;
+  // const role = user?.publicMetadata?.role;
 
-  if (role !== "admin") {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F8FAFC] px-4">
-        <div className="text-center">
-          <h1 className="text-lg font-semibold text-[#112233]">
-            Access Denied
-          </h1>
+  // if (role !== "admin") {
+  //   return (
+  //     <div className="flex min-h-screen items-center justify-center bg-[#F8FAFC] px-4">
+  //       <div className="text-center">
+  //         <h1 className="text-lg font-semibold text-[#112233]">
+  //           Access Denied
+  //         </h1>
 
-          <p className="mt-1 text-sm text-gray-500">
-            আপনার এই পেজে প্রবেশের অনুমতি নেই।
-          </p>
-        </div>
-      </div>
-    );
-  }
+  //         <p className="mt-1 text-sm text-gray-500">
+  //           আপনার এই পেজে প্রবেশের অনুমতি নেই।
+  //         </p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="space-y-6">
