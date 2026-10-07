@@ -13,7 +13,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const DEFAULT_EMAIL = "admin@example.com";
+const DEFAULT_EMAIL = "admin@gmail.com";
 const DEFAULT_PASSWORD = "YourDemoPassword123";
 
 export default function SignInPage() {

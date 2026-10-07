@@ -4,22 +4,22 @@ import { NextResponse } from "next/server";
 export default clerkMiddleware(async (auth, req) => {
   const pathname = req.nextUrl.pathname;
 
-  // /admin এবং /admin/* সব route
+  // শুধুমাত্র /admin এবং /admin/* protect করবে
   const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
 
-  // অন্য route-এ কিছু করার দরকার নেই
+  // Public routes
   if (!isAdminRoute) {
-    return;
+    return NextResponse.next();
   }
 
   const { isAuthenticated, sessionClaims } = await auth();
 
-  // Login করা নেই
+  // Authentication না থাকলে login page
   if (!isAuthenticated) {
     return NextResponse.redirect(new URL("/sign-in", req.url));
   }
 
-  // Clerk Session Token থেকে role
+  // Clerk session claims থেকে role
   const role = sessionClaims?.role;
 
   // শুধুমাত্র admin allowed
@@ -27,25 +27,13 @@ export default clerkMiddleware(async (auth, req) => {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  // Admin হলে request continue করবে
+  // Admin allowed
+  return NextResponse.next();
 });
 
 export const config = {
   matcher: [
-    /*
-     * সব application route-এ Clerk চালাবে
-     * কিন্তু Next static files বাদ দেবে।
-     */
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-
-    /*
-     * API এবং tRPC-তেও Clerk middleware চলবে।
-     */
     "/(api|trpc)(.*)",
-
-    /*
-     * Clerk frontend API
-     */
-    "/__clerk/(.*)",
   ],
 };
